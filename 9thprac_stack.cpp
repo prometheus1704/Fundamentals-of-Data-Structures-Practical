@@ -1,124 +1,104 @@
 #include<iostream>
-#include<string>
+#include<string.h>
 using namespace std;
 #define max 15
 
-class Stack
+class stack
 {
-    public:
-    int top;
-    char gof[max];
-    
-    public:
-    Stack()
-    {
-       top=-1;
-       gof[max]='\0';
-    }
-    void push(char ch);
-    char pop();
-    int isempty();
-    int isfull();
-    void display();
-    void checkparanthesis();
+
+int top;
+char exp[max];
+public:
+
+stack()
+{
+top =-1;
+exp[max]='\0';
+}
+void push(char ch);
+char pop();
+int isempty();
+int isfull();
+void display();
+void checkpara();
 };
-
-void Stack::push(char ch)
+int stack :: isempty()
 {
-    if(!isfull())
-    {
-       top++;
-       gof[top]=ch;
-    }
+if (top==-1)
+return 1;
+else return 0;
 }
-
-char Stack:: pop()
+int stack::isfull()
 {
-    if(!isempty())
-    {
-        char ch=gof[top];
-        top--;
-        return ch;
-    }
-    else
-    {
-        return '\0';
-    }
+if (top==max-1)
+return 1;
+else return 0;
 }
-
-int Stack :: isempty()
-{ 
-    if(top==max-1)
-      return 1;
-    else
-      return 0;
-}
-
-int Stack:: isfull()
+void stack :: display()
 {
-     if(top==max-1)
-      return 1;
-    else
-      return 0;
+if(isempty()==1){
+cout<<"\nStack is empty";}
+else{for (int i=0;i<=top;i++)
+{cout<<" "<<exp[i];
 }
-void Stack :: display()
-{
-    if(!isempty()==1)
-       cout<<"The stack is empty";
-    else
-    {
-       for(int i=0; i<=top ; i++)
-       {
-          cout<<" "<<gof[i];
-       }
-    }
 }
-
-void Stack :: checkparanthesis()
-{
-    int flag=0;
-    cout<<"Enter # as a dilimiter after expression"<<endl;
-    cout<<"Enter the Expression:"<<endl;
-    cin.getline(gof,max,'#');
-    char ch;
-    
-    for(int i=0 ; gof[i]!='\0' ; i++)
-    {
-       if(gof[i]=='(' || gof[i]=='{' || gof[i]=='[')
-          push(gof[i]);
-       if(gof[i]==')' || gof[i]=='}' || gof[i]==']')
-       {
-          ch=pop();
-          if(gof[i]==')' && ch!='(' || gof[i]=='}' && ch!='{' || gof[i]==']' && ch!='[')
-          {
-             cout<<"Expression is not paranthesis at "<<i<<"="<<gof[i];
-             flag=1;
-             break;
-          }
-       }   
-    }
-    if(isempty()==1 && flag==0)
-    {
-       cout<<"Expression well paranthesized"<<endl;
-    }
-    else
-    {
-       cout<<"Expression not paranthesized"<<endl; 
-    }
 }
-
-int main()
+void stack::push(char ch)
 {
+if(!isfull())
+{
+top++;
+exp[top]=ch;
+}}
+char stack:: pop()
+{
+if(!isempty())
+{
+char ch=exp[top];
+top--;
+return ch;
+}
+else
+{
+return '\0';
+}}
+void stack:: checkpara()
+{
+int flag=0;
+cout<<"\nEnter the # as a dilimiter after the expression ";
+cout<<"\nEnter expression : ";
+cin.getline(exp,max,'#');
 char ch;
-do
-{
-  Stack s;
-  s.checkparanthesis();
-  cout<<"Do you want to continue ? (y/n)";
-  cin>>ch;
-  cin.get(ch);
-}while(ch=='y' || ch=='Y') ;
-
-return 0;
+ for(int i=0;exp[i]!='\0';i++)
+ {
+ if(exp[i]=='(' || exp[i]=='[' || exp[i] == '{' )
+ {push (exp[i]);}
  
-}
+ if(exp[i]==')' || exp[i]==']' || exp[i] == '}' )
+ {ch = pop ();}
+ if ( (exp[i]==')'&& ch!='(')||(exp[i]==']'&&ch!='[')||(exp[i]=='}'&& ch!='{'))
+ {
+ cout<<"\nExp not parenthesized at "<<i<<"="<<exp[i];
+ flag =1;
+ break;
+ }
+ }
+ if(isempty()==1 && flag==0)
+ {cout<<"\nExp well parenthesized";}
+ else
+ {cout<<"\n Exp not parenthesized";}
+ }
+ int main()
+ {
+ char ch;
+ do{
+ stack s;
+ s.checkpara();
+ cout<<"\nWant to countinue (y/n)";
+ cin>>ch;
+ }
+ while(
+ ch=='y'||ch=='Y');
+ return 0;
+ }
+
