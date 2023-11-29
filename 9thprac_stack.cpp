@@ -102,3 +102,16 @@ char ch;
  return 0;
  }
 
+/*
+Enter the # as a dilimiter after the expression 
+Enter expression : (a+b)#
+
+Exp well parenthesized
+Want to countinue (y/n)y
+
+Enter the # as a dilimiter after the expression 
+Enter expression : {a+(b+c)#
+
+ Exp not parenthesized
+Want to countinue (y/n)n
+*/
