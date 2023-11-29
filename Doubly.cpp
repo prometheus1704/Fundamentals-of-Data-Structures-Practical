@@ -1,223 +1,197 @@
 #include <iostream>
-#include<stdlib.h>
 using namespace std;
-class node
-{ public:
-node* next;
-node* prev;
-int seat;
-string id;
-int status;
-};
-class cinemax
+class mynode
 {
 public:
-node* head,* tail ,* temp;
-cinemax()
+char booking_status;
+mynode *next;
+mynode *prev;
+};
+class theater
+{
+public:
+mynode *head,*last;
+theater()
 {
 head=NULL;
 }
-void create_list();
-void display();
-void book();
-void cancel();
-void avail();
-
+void create();
+void show();
+void book_tkt();
+void cancel_tkt();
 };
-void cinemax::create_list()
+void theater::create()
 {
-int i=1;
-temp=new node;
-temp->seat=1;
-temp->status=0;
-temp->id="null";
-tail=head=temp;
-for(int i=2;i<=70;i++)
+mynode *n;
+for(int i=0; i<=7; i++)
 {
-node *p;
-p= new node;
-p->seat=i;
-p->status=0;
-p->id="null";
-tail->next=p;
-p->prev=tail;
-tail=p;
-tail->next=head;
-head->prev=tail;
-
+n=new mynode();
+n->booking_status='\0';
+n->prev = NULL;
+if(head==NULL)
+{
+head=n;
+n->next=head;
+}
+else
+{
+mynode *t1,*t2;
+t1=head;
+while(t1->next!=head)
+{
+t2=t1;
+t1=t1->next;
+}
+t1->next=n;
+n->prev=t1;
+n->next=head;
+t1->prev=t2;
 }
 }
-void cinemax::display()
+}
+void theater::show()
 {
-{ int r=1;
-node* temp;
-temp=head;
-int count=0;
-cout<<"\n------------------------------------------------------------------------------------\n";
-cout<<" Screen this way \n";
-cout<<"------------------------------------------------------------------------------------\n";
+mynode *temp;
+temp = head;
 while(temp->next!=head)
 {
-if(temp->seat/10==0)
-cout<<"S0"<<temp->seat<<" :";
-else
-cout<<"S"<<temp->seat<<" :";
-
-if(temp->status==0)
-cout<<"|___| ";
-else
-cout<<"|_B_| ";
-count++;
-if(count%7==0)
-{
-cout<<endl;
-r++;
-}
+cout<<"("<<temp->booking_status<<")"<<"\t";
 temp=temp->next;
 }
-cout<<"S"<<temp->seat<<" :";
-if(temp->status==0)
-cout<<"|___| ";
-else
-cout<<"|_B_| ";
 }
-}
-void cinemax::book()
-{ int x;
-string y;
-label:
-cout<<"\n\n\nEnter seat number to be booked\n";
-cin>>x;
-cout<<"Enter your ID number\n";
-cin>>y;
-if(x<1||x>70)
+void theater::book_tkt()
 {
-cout<<"Enter correct seat number to book (1-70)\n";
-goto label;
-}
-node *temp;
-temp=new node;
+mynode *temp;
+int row1,i;
+cout<<"\nEnter seat number you want to book:";
+cin>>row1;
 temp=head;
-while(temp->seat!=x)
+for( i=1; i<row1;i++)
 {
 temp=temp->next;
 }
-
-if(temp->status==1)
-cout<<"Seat already booked!\n";
-else{
-temp->status=1;
-temp->id=y;
-cout<<"Seat "<<x<<" booked!\n";
-}
-
-}
-void cinemax::cancel()
+if(temp->booking_status=='B')
 {
-int x;
-string y;
-label1:
-cout<<"Enter seat number to cancel booking\n";
-cin>>x;
-cout<<"Enter you ID\n";
-cin>>y;
-if(x<1||x>70)
-{
-cout<<"Enter correct seat number to cancel (1-70)\n";
-goto label1;
+cout<<"\nSeat is already booked. Please try for another seat";
 }
-node *temp;
-temp=new node;
+else
+{
+temp->booking_status='B';
+}
+}
+void theater::cancel_tkt()
+{
+mynode *temp;
+int row1,i;
+cout<<"\nEnter Seat Number to cancel: ";
+cin>>row1;
 temp=head;
-while(temp->seat!=x)
+for(i=1;i<row1;i++)
 {
 temp=temp->next;
 }
-if(temp->status==0)
+if(temp->booking_status=='\0')
 {
-cout<<"Seat not booked yet!!\n";
+cout<<"\nThe selected seat is free\n\n";
 }
 else
 {
-if(temp->id==y)
-{
-temp->status=0;
-cout<<"Seat Cancelled!\n";
+temp->booking_status='\0';
 }
-
-else
-cout<<"Wrong User ID !!! Seat cannot be cancelled!!!\n";
-}
-}
-void cinemax::avail()
-{
-int r=1;
-node* temp;
-temp=head;
-int count=0;
-cout<<"\n\n\n\n";
-cout<<"\n------------------------------------------------------------------------------------\n";
-cout<<" Screen this way \n";
-cout<<"------------------------------------------------------------------------------------\n";
-while(temp->next!=head)
-{
-{
-if(temp->seat/10==0)
-cout<<"S0"<<temp->seat<<" :";
-else
-cout<<"S"<<temp->seat<<" :";
-if(temp->status==0)
-cout<<"|___| ";
-else if(temp->status==1)
-cout<<" ";
-
-count++;
-if(count%7==0)
-
-{
-
-cout<<endl;
-
-}
-
-}
-temp=temp->next;
-}
-if(temp->status==0)
-{
-cout<<"S"<<temp->seat<<" :";
-
-if(temp->status==0)
-cout<<"|___| ";
-}
-
 }
 int main()
-{ cinemax obj;
-obj.create_list();
-int ch;
-char c='y';
-while(c=='y')
-{ obj.display();
-cout<<"\n*********************************************\n";
-cout<<" CINEMAX MOVIE THEATRE\n";
-cout<<"*********************************************\n";
-cout<<"\nEnter Choice\n1.Current SeatStatus\n2.Book Seat \n3.Available Seat\n4.CancelSeat\n";
-cin>>ch;
-switch(ch)
 {
-case 1:obj.display();
-break;
-case 2: obj.book();
-break;
-case 3:obj.avail();
-break;
-case 4: obj.cancel();
-break;
-default: cout<<"Wrong choice input\n";
+// doublyLL s;
+int row,j=1,option,i,k;
+theater c[10];
+for(int i=1;i<=10;i++)
+{
+c[i].create();
 }
-cout<<"\nDo you want to perform any other operation : (y/n)\n";
-cin>>c;
+//To display column numbers
+for(int a=0;a<7;a++)
+{
+cout<<"\t"<<j;
+++j;
 }
+cout<<endl;
+//To show status of all seats at the beginning
+j=1;
+for(i=1;i<=10;i++)
+{
+cout<<j<<"\t";
+c[i].show();
+cout<<endl;
+++j;
+}
+do
+{
+cout<<"\nUsing Circular DLL Theate Ticket-Booking Operation:"<<endl;
+cout<<"1.Display Ticket status"<<endl;
+cout<<"2.Book ticket"<<endl;
+cout<<"3.Cancel ticket"<<endl;
+cout<<"Enter correct option, 0 to exit"<<endl;
+cin>>option;
+switch(option)
+{
+case 0:
+break;
+case 1:
+cout<<"Current Booking Status:"<<endl;
+j=1;
+for(int i=1;i<=10;i++)
+{
+cout<<j<<"\t";
+c[i].show();
+cout<<endl;
+++j;
+}
+break;
+case 2:
+cout<<"Booking Operation:"<<endl;
+cout<<"\nEnter row number to book seat:";
+cin>>row;
+c[row].book_tkt();
+j=1;
+for(int k=0;i<7;k++)
+{
+cout<<"\t"<<j;
+++j;
+}
+cout<<endl;
+j=1;
+for(i=1;i<=10;i++)
+{
+cout<<j<<"\t";
+c[i].show();
+cout<<endl;
+++j;
+}
+break;
+case 3:
+cout<<"Booking cancel Operation:"<<endl;
+cout<<"\nEnter row number to cancel seat:";
+cin>>row;
+c[row].cancel_tkt();
+j=1;
+for( k=0;i<7;k++)
+{
+cout<<"\t"<<j;
+++j;
+}
+cout<<endl;
+j=1;
+for(i=1;i<=10;i++)
+{
+cout<<j<<"\t";
+c[i].show();
+cout<<endl;
+++j;
+}
+break;
+default:
+cout<<"Enter proper option"<<endl;
+}
+}while(option!=0);
 return 0;
 }
