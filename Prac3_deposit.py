@@ -14,8 +14,7 @@ while True:
     data=input("Enter the Amount...")
     if(data=='Q'):
         break
-lst.append(data.split())
-lst
+    lst.append(data.split())
 for i in lst:
     if(i[0]=='D'):
         deposit(int(i[1]))
