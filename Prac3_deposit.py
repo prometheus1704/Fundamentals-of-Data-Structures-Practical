@@ -4,10 +4,10 @@ def deposit(num):
 
 def withdrawal(num):
     global balance
-    if balance > 0:
+    if balance >= num:  # Allowing withdrawal even if the balance is zero
         balance = balance - num
     else:
-        print("You cannot withdraw because the balance is less.")
+        print("Insufficient funds for withdrawal.")
 
 lst = []
 balance = 0
@@ -19,6 +19,10 @@ while True:
     lst.append(data.split())
 
 for i in lst:
+    if len(i) != 2 or not i[1].isdigit():  # Check if input format is valid
+        print("Invalid input format:", i)
+        continue
+
     if i[0] == 'D':
         deposit(int(i[1]))
     elif i[0] == 'W':
