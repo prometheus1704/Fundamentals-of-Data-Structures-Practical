@@ -14,7 +14,7 @@ def selection_sort(list1,n):
         list1_idx=i
         for j in range(i+1,n):
             if(list1[list1_idx]>list1[j]):
-                list1_idx=j
+                #list1_idx=j this is not required 
                 (list1[list1_idx],list1[j])=(list1[j],list1[list1_idx])
                  
     for j in range(n):
