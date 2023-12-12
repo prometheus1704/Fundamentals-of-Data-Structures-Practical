@@ -7,7 +7,7 @@ def withdrawal(num):
     global balance 
 
     if balance>=num:
-        balance-=numD
+        balance-=num
     else:
         print("Not enough balance")
         
