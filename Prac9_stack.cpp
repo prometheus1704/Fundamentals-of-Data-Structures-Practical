@@ -1,117 +1,106 @@
 #include<iostream>
-#include<string.h>
+#include<string>
 using namespace std;
-#define max 15
+#define max 20
 
 class stack
 {
+    char arr[max];
+    int top;
 
-int top;
-char exp[max];
 public:
-
-stack()
-{
-top =-1;
-exp[max]='\0';
-}
-void push(char ch);
-char pop();
-int isempty();
-int isfull();
-void display();
-void checkpara();
+    stack()
+    {
+        top = -1;
+    }
+    void push(char x);
+    char pop();
+    void Checkparanthesis();
+    void Display();
 };
-int stack :: isempty()
-{
-if (top==-1)
-return 1;
-else return 0;
-}
-int stack::isfull()
-{
-if (top==max-1)
-return 1;
-else return 0;
-}
-void stack :: display()
-{
-if(isempty()==1){
-cout<<"\nStack is empty";}
-else{for (int i=0;i<=top;i++)
-{cout<<" "<<exp[i];
-}
-}
-}
-void stack::push(char ch)
-{
-if(!isfull())
-{
-top++;
-exp[top]=ch;
-}}
-char stack:: pop()
-{
-if(!isempty())
-{
-char ch=exp[top];
-top--;
-return ch;
-}
-else
-{
-return '\0';
-}}
-void stack:: checkpara()
-{
-int flag=0;
-cout<<"\nEnter the # as a dilimiter after the expression ";
-cout<<"\nEnter expression : ";
-cin.getline(exp,max,'#');
-char ch;
- for(int i=0;exp[i]!='\0';i++)
- {
- if(exp[i]=='(' || exp[i]=='[' || exp[i] == '{' )
- {push (exp[i]);}
- 
- if(exp[i]==')' || exp[i]==']' || exp[i] == '}' )
- {ch = pop ();}
- if ( (exp[i]==')'&& ch!='(')||(exp[i]==']'&&ch!='[')||(exp[i]=='}'&& ch!='{'))
- {
- cout<<"\nExp not parenthesized at "<<i<<"="<<exp[i];
- flag =1;
- break;
- }
- }
- if(isempty()==1 && flag==0)
- {cout<<"\nExp well parenthesized";}
- else
- {cout<<"\n Exp not parenthesized";}
- }
- int main()
- {
- char ch;
- do{
- stack s;
- s.checkpara();
- cout<<"\nWant to countinue (y/n)";
- cin>>ch;
- }
- while(
- ch=='y'||ch=='Y');
- return 0;
- }
 
-/*
-Enter the # as a dilimiter after the expression 
-Enter expression : (a+b)#
+void stack::push(char x)
+{
+    if (top == max - 1)
+    {
+        cout << "Stack Overflow!!" << endl;
+    }
+    else
+    {
+        top++;
+        arr[top] = x;
+    }
+}
 
-Exp well parenthesized
-Want to countinue (y/n)y
+char stack::pop()
+{
+    if (top == -1)
+    {
+        cout << "Stack underflow!!" << endl;
+        return '\0'; // Return a default value in case of underflow
+    }
+    else
+    {
+        return arr[top--];
+    }
+}
 
-Enter the # as a dilimiter after the expression 
-Enter expression : {a+(b+c)#
+void stack::Display()
+{
+    if (top == -1)
+    {
+        cout << "Stack is empty." << endl;
+    }
+    else
+    {
+        cout << "The elements in the stack are: ";
+        for (int i = 0; i <= top; i++)
+        {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+}
 
- Exp not parenthesized
-Want to countinue (y/n)n
-*/
+void stack::Checkparanthesis()
+{
+    cout << "Enter the Expression with delimiter # at the end:";
+    cin.getline(arr, max, '#');
+    char ch;
+    int flag = 0;
+
+    for (int i = 0; arr[i] != '\0'; i++)
+    {
+        if (arr[i] == '(' || arr[i] == '[' || arr[i] == '{')
+        {
+            push(arr[i]);
+        }
+        if (arr[i] == ')' || arr[i] == ']' || arr[i] == '}')
+        {
+            ch = pop();
+            if ((arr[i] == ')' && ch != '(') || (arr[i] == ']' && ch != '[') || (arr[i] == '}' && ch != '{'))
+            {
+                cout << "Expression Not parenthesized!!" << endl;
+                flag = 1;
+                break;
+            }
+        }
+    }
+
+    if (top != -1 && flag == 0)
+    {
+        cout << "Expression Not parenthesized!!" << endl;
+    }
+    else if (top == -1 && flag == 0)
+    {
+        cout << "Expression well parenthesized!!" << endl;
+    }
+}
+
+
+int main()
+{
+    stack s;
+    s.Checkparanthesis();
+    return 0;
+}
