@@ -1,165 +1,131 @@
-def removeduplicate(d):
-    lst = []
-    for i in d:
-        if i not in lst:
-            lst.append(i)
-    return lst
+def rmvd(lst):
+    lst3=[]
+    for i in lst:
+        if i not in lst3:
+            lst3.append(i)
+    return lst3
 
+def uni(lst1,lst2):
+    lst3=[]
+    for i in lst1:
+        lst3.append(i)
+    for i in lst2:
+        if i not in lst3:
+            lst3.append(i)
+    return lst3
 
-def intersection(lst1,lst2):
-    lst3 = [ ]
+def inter(lst1,lst2):
+    lst3=[]
     for i in lst1:
         if i in lst2:
             lst3.append(i)
     return lst3
 
-def union(lst1,lst2):
-    lst3 =[]
-    for i in lst1:
-        lst3.append(i)
-        for i in lst2:
-            if i not in lst1:
-                lst3.append(i)
-    return lst3
 
-def difference(lst1,lst2):
-    lst3 = []
-    for  i in lst1:
+def dif(lst1,lst2):
+    lst3=[]
+    for i in lst1:
         if i not in lst2:
             lst3.append(i)
+
     return lst3
 
-# def bCnF(lst1,lst2):
-#     lst3 =[]
-#     lst3 =intersection(lst1, lst2)
-#     print("The list of students who play both Cricket and Football are:",lst3)
-#     return  lst3
-
-def bCnB(lst1,lst2):
+def symdif(lst1,lst2):
     lst3=[]
-    lst3= intersection(lst1, lst2)
-    print("The list of students who play both Cricket and Badminton are:", lst3)
+    j=dif(lst1,lst2)
+    k=dif(lst2,lst1)
+    lst3=uni(j,k)
     return lst3
 
 
+stu=[]
+n=int(input("Enter no.of std:"))
+for i in range(n):
+    ele=input()
+    stu.append(ele)
 
+cric=[]
+c=int(input("no.of cric std:"))
+for i in range(c):
+    ele=input()
+    cric.append(ele)
 
-
-
-
-
-
-
-
-
-
-#############################################################
-
-SECOMP = [ ]
-n = int(input("Enter the number of students in SECOMP:  "))
-print("Enter the names of ",n,"students : ")
-
-for i in range (0, n):
+foot = []
+f = int(input("no.of foot std:"))
+for i in range(f):
     ele = input()
-    SECOMP.append(ele)
-print("Original list of students ",(SECOMP))
+    foot.append(ele)
 
-#############################################################
-
-Cricket = [ ]
-c = int(input("\nEnter the number of students who plays Cricket:  "))
-print("\nEnter the names of ",c,"students : ")
-
-for i in range (0, c):
+badm = []
+f = int(input("no.of badm std:"))
+for i in range(f):
     ele = input()
-    Cricket.append(ele)
+    badm.append(ele)
 
-print("Original list of students who plays Cricket: ",(Cricket))
+print(stu)
+print("The list of stud by removing duplicate:  ",rmvd(stu))
+print(cric)
+print("The list of cric by removing duplicate:  ",rmvd(cric))
+print(foot)
+print("The list of foot by removing duplicate:  ",rmvd(foot))
+print(badm)
+print("The list of badm by removing duplicate:  ",rmvd(badm))
 
-Cricket = removeduplicate(Cricket)
-print("\nThe list of students after removing duplicates is:", Cricket)
+flag=1
+while(flag==1):
+    print("*******Menu**********")
+    print("1.stud play both cric and badm")
+    print("2.stud play either cric or badm not both")
+    print("3.stud play neither cric nor badm")
+    print("4.stud play  cric and foot but not badm")
+    print("5.Exit")
 
-#############################################################
+    print()
+    a=int(input("Enter choice: "))
+    if(a==1):
+        print("1. stud play both cric and bad: ")
+        v = inter(cric, badm)
+        print(v)
+        w=int(input("Want to continue hit 1:"))
+        if(w==1):
+            flag=1
+        else:
+            flag=0
 
-Football = [ ]
-f = int(input("\nEnter the number of students who plays Football:  "))
-print("\nEnter the names of ",f,"students : ")
-
-for i in range (0, f):
-    ele = input()
-    Football.append(ele)
-print("\nOriginal list of students who plays Football: ",(Football))
-
-Football = removeduplicate(Football)
-print("The list of students after removing duplicates is:", Football)
-
-#############################################################
-
-Badminton = [ ]
-f = int(input("\nEnter the number of students who plays Badminton:  "))
-print("\nEnter the names of ",f,"students : ")
-
-for i in range (0, f):
-    ele = input()
-    Badminton.append(ele)
-print("\nOriginal list of students who plays Badminton: ",(Badminton))
-
-Badminton = removeduplicate(Badminton)
-print("The list of students after removing duplicates is:\n", Badminton)
-
-
-x =difference(union(Cricket, Badminton), intersection(Cricket, Badminton))
-y =difference(SECOMP,union(Cricket,Badminton))
-
-
-
-# MENU
-
-flag = 1
-while flag ==1:
-    print("---------------------------------------------MENU------------------------------------------")
-    print("1.List of students who play both Cricket and Badminton ")
-    print("2.List of students who play either Cricket or Badminton but not both")
-    print("3.List of students who play neither Cricket nor Badminton")
-    print("4.List of students who play Cricket and Football but not Badminton")
-
-
-    op=int(input("Enter your choice: "))
-    if(op == 1):
-        print("The list of students who play both Cricket and Badminton is",bCnB(Cricket,Badminton) )
-        a = input("Do you want to continue(yes/no:)")
-        if (a =='yes'):
+    elif (a == 2):
+        print("2. stud play either cric or badm but not both: ")
+        g = dif(uni(cric, badm), inter(cric, badm))
+        print(g)
+        w = int(input("Want to continue hit 1:"))
+        if (w == 1):
             flag = 1
         else:
             flag = 0
 
-    elif(op == 2):
-        print("List of students who play Cricket or Badminton but not both",x)
-        a = input("Do you want to continue(yes/no:)")
-        if (a =='yes'):
+    elif (a == 3):
+        print("3. stud play no cric no badm: ")
+        h = dif(stu, uni(cric, badm))
+        print(h)
+        w = int(input("Want to continue hit 1:"))
+        if (w == 1):
             flag = 1
         else:
             flag = 0
 
-    # elif (op == 3):
-    #     print("List of students who play neither Cricket nor Badminton"),
-    #     a = input("Do you want to continue(yes/no:)")
-    #     if (a =='yes'):
-    #         flag = 1
-    #     else:
-    #         flag = 0
-    #
-    # elif(op==4):
-    #     print("List of students who play Cricket and Football but not Badminton"),
-    #     a = input("Do you want to continue(yes/no:)")
-    #     if (a == 'yes'):
-    #         flag = 1
-    #     else:
-    #         flag = 0
+    elif (a == 4):
+        print("4. stud play cric and foot but no bad: ")
+        j = dif(inter(cric, foot), badm)
+        print(j)
+        w = int(input("Want to continue hit 1:"))
+        if (w == 1):
+            flag = 1
+        else:
+            flag = 0
 
-    # elif(op == 5):
-    #     print("Thank You!")
-    #     break
 
-if (flag == 0):
-    print("Thank you!")
+    elif (a == 5):
+        print("Thank you!")
+        break
+
+if(flag==0):
+    print("Thanks")
