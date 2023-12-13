@@ -1,7 +1,7 @@
 #include<iostream>
 #include<string>
 using namespace std;
-#define max 20
+#define max 20  //Preprocessor directive
 
 class stack
 {
