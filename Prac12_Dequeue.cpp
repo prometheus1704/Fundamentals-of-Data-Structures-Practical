@@ -1,150 +1,188 @@
 #include<iostream>
 using namespace std;
-#define size 5
+#define max 20
 
-class Dqueue {
-    int arr[size];
-    int front, rear;
-
-public:
-    Dqueue();
-    void insertRear(int);
-    void insertFront(int);
-    int removeRear();
-    int removeFront();
-    int isFullrear();
-    int isFullfront();
-    int isEmpty();
-    void display();
+class deque
+{
+	int arr[max];
+	int front,rear;
+	public:
+	deque()
+	{
+		front = -1;
+		rear = -1;	
+	}	
+	void enqueue_front(int x);
+	void enqueue_rear(int x);
+	void dequeue_front();
+	void dequeue_rear();
+	void Display();
 };
-
-Dqueue::Dqueue() {
-    front = rear = -1;
+void deque :: enqueue_front(int x)
+{
+	if(front==0 && rear==max-1)
+	{
+		cout<<"The queue is Full!!"<<endl;
+	}
+	else if(front==0 && rear!=max-1)
+	{
+		front=max-1;
+		arr[front]=x;
+		cout<<"The Element added : "<<arr[front]<<endl;
+	}
+	else if(front>rear && rear==front-1 )
+	{
+		cout<<"Deque is full!!"<<endl;
+	}
+	else
+	{
+		front--;
+		arr[front]=x;
+		cout<<"The Element added : "<<arr[front]<<endl;
+	}
+    
+	if(front==-1)
+	{
+		front++;
+	}
 }
 
-int Dqueue::isEmpty() {
-    return (front == -1 && rear == -1);
+void deque :: enqueue_rear(int x)
+{
+	if (front==0 && rear==max-1)
+	{
+		cout<<"Queue is Full!!"<<endl;
+	}
+	else if (rear==-1)
+	{
+		rear++;
+		arr[rear]=x;
+		cout<<"The Element added : "<<arr[rear]<<endl;
+	}
+	else if(front!=0 && rear==max-1)
+	{
+		rear=0;
+		arr[rear]=x;
+		cout<<"The Element added : "<<arr[rear]<<endl;
+	}
+	else
+	{
+		rear++;
+		arr[rear]=x;
+		cout<<"The Element added : "<<arr[rear]<<endl;
+	}
+	if (front==-1)
+	{
+		front++;
+	}
 }
 
-int Dqueue::isFullrear() {
-    return (rear == size - 1);
+void deque :: dequeue_front()
+{
+	if(front==-1 && rear==-1)
+	{
+		cout<<"Queue is Empty!!"<<endl;
+	}
+	else if(front==max-1)
+	{
+		cout<<"The Element removed : "<<arr[front]<<endl;
+		front=0;
+	}
+	else if(front>rear)
+	{
+		cout<<"The Element removed : "<<arr[front]<<endl;
+		front++;
+	}
+	else
+	{
+		cout<<"The Element removed : "<<arr[front]<<endl;
+		front++;
+	}
 }
 
-int Dqueue::isFullfront() {
-    return (front == 0);
+void deque :: dequeue_rear()
+{
+	if(front==-1 && rear==-1)
+	{
+		cout<<"Queue is Empty!!"<<endl;
+	}
+	else if(front>rear && rear!=0)
+	{
+		cout<<"The Element removed : "<<arr[rear]<<endl;
+		rear--;
+	}
+	else if(rear==0 && front!=max-1)
+	{
+		cout<<"The Element removed : "<<arr[rear]<<endl;
+		rear=max-1;
+	}
+	else
+	{
+		cout<<"The Element removed : "<<arr[rear]<<endl;
+		rear--;
+	}
 }
 
-void Dqueue::insertRear(int x) {
-    if (!isFullrear()) {
-        if (rear == -1 && front == -1) {
-            rear = front = 0;
-            arr[rear] = x;
-        } else {
-            rear++;
-            arr[rear] = x;
-        }
-    } else {
-        cout << "Overflow Operation" << endl;
-    }
+void deque :: Display()
+{
+	cout<<"\nElements in the deque:"<<endl;;
+	int i=front;
+	while(i!=rear+1)
+	{
+		cout<<arr[i]<<" ";
+		i=(i+1)%max;
+	}
 }
-
-void Dqueue::insertFront(int x) {
-    if (!isFullfront()) {
-        if (rear == -1 && front == -1) {
-            rear = front = 0;
-            arr[front] = x;
-        } else {
-            front--;
-            arr[front] = x;
-        }
-    } else {
-        cout << "Overflow Operation" << endl;
-    }
-}
-
-int Dqueue::removeRear() {
-    int x;
-    if (!isEmpty()) {
-        if (rear == front) {
-            x = arr[rear];
-            rear = front = -1;
-        } else {
-            x = arr[rear];
-            rear--;
-        }
-    } else {
-        cout << "Underflow Operation" << endl;
-    }
-    return x;
-}
-
-int Dqueue::removeFront() {
-    int x;
-    if (!isEmpty()) {
-        if (rear == front) {
-            x = arr[front];
-            rear = front = -1;
-        } else {
-            x = arr[front];
-            front++;
-        }
-    } else {
-        cout << "Underflow Operation" << endl;
-    }
-    return x;
-}
-
-void Dqueue::display() {
-    int i;
-    cout << " ";
-    for (i = front; i <= rear; i++) {
-        cout << arr[i] << endl;
-    }
-}
-
-int main() {
-    Dqueue dq;
-    int data, choice;
-    do {
-        cout << " 1. Insert From Rear" << endl;
+int main()
+{
+	deque q;
+	int choice;
+	int a;
+	do
+	{
+		cout << " \n1. Insert From Rear" << endl;
         cout << " 2. Insert From Front" << endl;
         cout << " 3. Remove From Rear" << endl;
         cout << " 4. Remove From Front" << endl;
         cout << " 5. Show all" << endl;
         cout << " 6. Exit" << endl;
-        cout << " Enter choice:" << endl;
-        std::cin >> choice;
-
-        switch (choice) {
-            case 1:
-                cout << "\n Enter data:" << endl;
-                std::cin >> data;
-                dq.insertRear(data);
-                break;
-            case 2:
-                cout << "\n Enter data:" << endl;
-                std::cin >> data;
-                dq.insertFront(data);
-                break;
-            case 3:
-                cout << "\n The element removed from rear of Q is : "
-                          << dq.removeRear()<<endl;
-                break;
-            case 4:
-                cout << "\n The element removed from Front of Q is : "
-                          << dq.removeFront()<<endl;
-                break;
-            case 5:
-                cout << "\n The element of Q are : " << endl;
-                dq.display();
-                break;
-            case 6:
-                cout << "\n Exit !!!\n";
-                break;
-            default:
-                cout << "Invalid choice !";
-        }
-    } while (choice != 6);
-
-    return 0;
+        cout << " Enter choice:" ;
+        cin >> choice;
+        
+        switch(choice)
+        {
+        	case 1:
+        		cout<<"Enter the Number to entered at Rear:";
+        		cin>>a;
+        		q.enqueue_rear(a);
+        		break;
+        		
+        	case 2:
+        		cout<<"Enter the Number to entered at Front:";
+        		cin>>a;
+        		q.enqueue_front(a);
+        		break;
+        	
+        	case 3:
+        		q.dequeue_rear();
+        		break;
+        		
+        	case 4:
+        		q.dequeue_front();
+        		break;
+        		
+        	case 5:
+        		q.Display();
+        		break;
+        		
+        	case 6:
+        		cout<<"Thank you!!"<<endl;
+        		break;
+		}
+    }while(choice!=6);
+	return 0;
 }
+
+
+
+
