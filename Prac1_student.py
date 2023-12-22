@@ -73,7 +73,9 @@ print("The list of badm by removing duplicate:  ",rmvd(badm))
 
 flag=1
 while(flag==1):
+
     print("********Menu***********")
+
     print("1.stud play both cric and badm")
     print("2.stud play either cric or badm not both")
     print("3.stud play neither cric nor badm")
@@ -129,4 +131,5 @@ while(flag==1):
 
 if(flag==0):
     print("Thanks")
+
 
